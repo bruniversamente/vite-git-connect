@@ -31,9 +31,10 @@ export default function Header() {
 
         {/* Menu desktop */}
         <nav className="hidden md:flex items-center gap-6 text-[15px]">
-          <NavLink to="/solucoes" onMouseEnter={() => setOpen("solucoes")} onMouseLeave={() => setOpen(null)}>
-            Soluções
-          </NavLink>
+          <div onMouseEnter={() => setOpen("solucoes")} onMouseLeave={() => setOpen(null)} className="relative">
+            <NavLink to="/solucoes">Soluções</NavLink>
+            {open === "solucoes" && <HeaderDropdown onClose={() => setOpen(null)} />}
+          </div>
           <div onMouseEnter={() => setOpen("blog")} onMouseLeave={() => setOpen(null)}>
             <NavLink to="/blog">Blog</NavLink>
             {open === "blog" && <HeaderDropdownBlog />}
@@ -50,10 +51,6 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Dropdown desktop */}
-      {open === "solucoes" && (
-        <HeaderDropdown onClose={() => setOpen(null)} />
-      )}
 
       {/* Menu mobile */}
       {mobileOpen && (
