@@ -1,4 +1,5 @@
 // src/router/AppRouter.tsx
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "../pages/home";
 import BlogIndex from "../pages/blog";
 import BlogPost from "../pages/blog/slug";

@@ -11,7 +11,7 @@ export const api = axios.create({
 });
 
 // Attach auth header (JWT) when available
-api.interceptors.request.use((cfg) => {
+api.interceptors.request.use((cfg: any) => {
   cfg.headers = { ...(cfg.headers || {}), ...authHeader() };
   return cfg;
 });

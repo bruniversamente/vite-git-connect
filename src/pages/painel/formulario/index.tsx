@@ -1,5 +1,5 @@
-import Section from "../../components/layout/Section";
-import {"Container"} from "../../components/layout/Containers";
+import Section from "../../../components/layout/Section";
+import { Container } from "../../../components/layout/Containers";
 
 export default function Page() {
   return (

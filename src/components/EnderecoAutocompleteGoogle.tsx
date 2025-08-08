@@ -1,7 +1,13 @@
 import { useId } from "react";
 
+type Props = {
+  label: string;
+  placeholder?: string;
+  onSelecionado?: (info: { lat: number; lng: number; endereco: string }) => void;
+};
+
 // Placeholder control para dev local; troque depois por Google Places Autocomplete.
-export default function EnderecoAutocompleteGoogle({label, placeholder="Digite o endereço"}:{label:string; placeholder?:string}){
+export default function EnderecoAutocompleteGoogle({ label, placeholder = "Digite o endereço" }: Props) {
   const id = useId();
   return (
     <label htmlFor={id} className="grid gap-1">

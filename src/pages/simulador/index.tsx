@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import EnderecoAutocompleteGoogle from "../components/EnderecoAutocompleteGoogle";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import EnderecoAutocompleteGoogle from "../../components/EnderecoAutocompleteGoogle";
 import { LoadScript } from "@react-google-maps/api";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "emailjs-com";
@@ -79,7 +79,7 @@ export default function Simulador() {
           <div>
             <span className="block mb-2 font-medium text-gray-800">Endereço completo da área do projeto</span>
             <EnderecoAutocompleteGoogle
-              onSelecionado={(info) => {
+              onSelecionado={(info: any) => {
                 setCoordenadas({ lat: info.lat, lng: info.lng });
                 setEndereco(info.endereco);
               }}
