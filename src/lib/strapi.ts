@@ -1,33 +1,37 @@
 // src/lib/strapi.ts
 import { ENV } from "./env";
 
-type FetchOptions = RequestInit & { query?: Record<string, string | number | boolean> };
+type Query = Record<string, string | number | boolean | undefined>;
+type FetchOptions = RequestInit & { query?: Query };
 
-export function buildURL(path: string, query?: Record<string, any>) {
-  const clean = path.replace(/^\/+/, "");
-  // Prefixa sempre /api para endpoints REST do Strapi
-  const url = new URL(`api/${clean}`, ENV.STRAPI_URL + "/");
+function buildApiURL(path: string, query?: Query) {
+  if (!ENV.STRAPI_URL) throw new Error("STRAPI_URL não configurado");
+  // base para API
+  const base = `${ENV.STRAPI_URL}/api`;
+  const cleanPath = path.replace(/^\/+/, ""); // remove "/" inicial
+  const url = new URL(`${base}/${cleanPath}`);
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
-      if (v !== undefined && v !== null) url.searchParams.set(k, String(v));
+      if (v !== undefined) url.searchParams.set(k, String(v));
     });
   }
   return url.toString();
 }
 
+/** Fetch JSON na API do Strapi com token opcional */
 export async function fetchJSON<T = any>(path: string, options: FetchOptions = {}): Promise<T> {
   const { query, headers, ...rest } = options;
-  const url = buildURL(path, query);
-  const baseHeaders: Record<string, string> = {
-    Accept: "application/json",
+  const url = buildApiURL(path, query);
+
+  const finalHeaders: HeadersInit = {
     "Content-Type": "application/json",
+    ...(headers || {}),
   };
-  if (ENV.STRAPI_TOKEN) baseHeaders["Authorization"] = `Bearer ${ENV.STRAPI_TOKEN}`;
-  const finalHeaders: HeadersInit = { ...baseHeaders, ...(headers as any) };
-  const res = await fetch(url, {
-    headers: finalHeaders,
-    ...rest,
-  });
+  if (ENV.STRAPI_TOKEN) {
+    finalHeaders["Authorization"] = `Bearer ${ENV.STRAPI_TOKEN}`;
+  }
+
+  const res = await fetch(url, { headers: finalHeaders, ...rest });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new Error(`Strapi ${res.status}: ${text || res.statusText}`);
@@ -35,10 +39,10 @@ export async function fetchJSON<T = any>(path: string, options: FetchOptions = {
   return res.json();
 }
 
+/** Para imagens/arquivos vindos do Strapi (NÃO usa /api) */
 export function imageURL(strapiFileUrl?: string | null) {
   if (!strapiFileUrl) return undefined;
-  // Se vier só o caminho (/uploads/...), prefixa STRAPI base (sem /api)
   if (strapiFileUrl.startsWith("http")) return strapiFileUrl;
+  if (!ENV.STRAPI_URL) throw new Error("STRAPI_URL não configurado");
   return `${ENV.STRAPI_URL}${strapiFileUrl}`;
 }
-
