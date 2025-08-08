@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import tailwindcss from "@tailwindcss/postcss";
 
 export default defineConfig(async ({ mode }) => {
   const { componentTagger } = await import("lovable-tagger");
@@ -15,9 +16,9 @@ export default defineConfig(async ({ mode }) => {
     ].filter(Boolean),
     css: {
       postcss: {
-        plugins: {
-          '@tailwindcss/postcss': {},
-        },
+        plugins: [
+          tailwindcss,
+        ],
       },
     },
     resolve: {
