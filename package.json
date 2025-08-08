@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
+    "build": "dev"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.7",
