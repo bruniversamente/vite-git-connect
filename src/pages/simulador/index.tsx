@@ -79,6 +79,7 @@ export default function Simulador() {
           <div>
             <span className="block mb-2 font-medium text-gray-800">Endereço completo da área do projeto</span>
             <EnderecoAutocompleteGoogle
+              label="Endereço completo da área do projeto"
               onSelecionado={(info: any) => {
                 setCoordenadas({ lat: info.lat, lng: info.lng });
                 setEndereco(info.endereco);
