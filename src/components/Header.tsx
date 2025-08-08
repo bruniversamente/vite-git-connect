@@ -44,7 +44,7 @@ export default function Header() {
           </div>
           <NavLink to="/sobre">Sobre</NavLink>
           <NavLink to="/contato">Contato</NavLink>
-          <NavLink to="/login" className="ml-2 rounded-full bg-[#0071e3] text-white px-4 py-1.5">
+          <NavLink to="/login" className="ml-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5">
             Entrar
           </NavLink>
         </nav>
@@ -64,7 +64,7 @@ export default function Header() {
             <NavLink to="/casosdesucesso" onClick={() => setMobileOpen(false)}>Casos</NavLink>
             <NavLink to="/sobre" onClick={() => setMobileOpen(false)}>Sobre</NavLink>
             <NavLink to="/contato" onClick={() => setMobileOpen(false)}>Contato</NavLink>
-            <NavLink to="/login" onClick={() => setMobileOpen(false)} className="mt-2 inline-block rounded-full bg-[#0071e3] text-white px-4 py-1.5 w-max">Entrar</NavLink>
+            <NavLink to="/login" onClick={() => setMobileOpen(false)} className="mt-2 inline-block rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 w-max">Entrar</NavLink>
           </div>
         </nav>
       )}

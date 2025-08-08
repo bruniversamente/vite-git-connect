@@ -7,6 +7,7 @@ import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "./index.css";
 import DevErrorBoundary from "./components/DevErrorBoundary";
+import { HelmetProvider } from "react-helmet-async";
 
 if (import.meta.env.DEV && typeof window !== "undefined") {
   window.addEventListener("error", (e) => {
@@ -19,8 +20,10 @@ if (import.meta.env.DEV && typeof window !== "undefined") {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <DevErrorBoundary>
-      <AppRouter />
-    </DevErrorBoundary>
+    <HelmetProvider>
+      <DevErrorBoundary>
+        <AppRouter />
+      </DevErrorBoundary>
+    </HelmetProvider>
   </React.StrictMode>
 );
