@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { fetchPosts, PostNormalized } from "./blogApi";
+import { Link } from "react-router-dom";
+import { getAllPosts, coverUrl } from "../../lib/posts";
+import type { Post } from "../../types/content";
 
 export default function BlogIndex() {
-  const [posts, setPosts] = useState<PostNormalized[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page") || 1);
 
   useEffect(() => {
     setLoading(true);
-    fetchPosts(page, 10).then((data) => {
-      setPosts(data);
-      setLoading(false);
-    });
-  }, [page]);
-
-  const next = () => setSearchParams({ page: String(page + 1) });
-  const prev = () => setSearchParams({ page: String(Math.max(1, page - 1)) });
+    getAllPosts()
+      .then((data) => setPosts(data))
+      .finally(() => setLoading(false));
+  }, []);
 
   if (loading) return <div className="p-8">Carregando…</div>;
 
@@ -27,9 +22,9 @@ export default function BlogIndex() {
 
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((p) => (
-          <article key={p.id} className="border rounded-lg overflow-hidden bg-white">
-            {p.coverUrl && (
-              <img src={p.coverUrl} alt={p.coverAlt || p.title} className="w-full h-40 object-cover" />
+          <article key={p.slug} className="border rounded-lg overflow-hidden bg-white">
+            {coverUrl(p) && (
+              <img src={coverUrl(p)} alt={p.cover?.data?.attributes?.alternativeText || p.title} className="w-full h-40 object-cover" />
             )}
             <div className="p-4">
               <h2 className="text-lg font-medium leading-snug line-clamp-2 min-h-[3.25rem]">
@@ -47,12 +42,7 @@ export default function BlogIndex() {
           </article>
         ))}
       </div>
-
-      <div className="flex items-center justify-center gap-3 mt-8">
-        <button onClick={prev} disabled={page <= 1} className="px-3 py-1 rounded border disabled:opacity-50">Anterior</button>
-        <span className="text-sm text-gray-600">Página {page}</span>
-        <button onClick={next} className="px-3 py-1 rounded border">Próxima</button>
-      </div>
     </section>
   );
 }
+
