@@ -11,7 +11,9 @@ export default class DevErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: unknown, info: unknown) {
-    console.error("App error boundary caught:", error, info);
+    if (import.meta.env.DEV) {
+      console.error("App error boundary caught:", error, info);
+    }
   }
 
   render() {
@@ -21,9 +23,11 @@ export default class DevErrorBoundary extends Component<Props, State> {
           <div className="max-w-xl text-center">
             <h1 className="text-xl font-semibold">Ocorreu um erro na interface</h1>
             <p className="text-neutral-600 mt-2">Atualize a página. Os detalhes foram registrados no console.</p>
-            <pre className="text-xs text-red-600 mt-4 bg-red-50 p-3 rounded overflow-auto max-h-48">
-              {String(this.state.error)}
-            </pre>
+            {import.meta.env.DEV && (
+              <pre className="text-xs text-red-600 mt-4 bg-red-50 p-3 rounded overflow-auto max-h-48">
+                {String(this.state.error)}
+              </pre>
+            )}
           </div>
         </div>
       );

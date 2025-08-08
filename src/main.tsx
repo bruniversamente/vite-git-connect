@@ -4,9 +4,9 @@ import AppRouter from "./router/AppRouter";
 import "./index.css";
 import DevErrorBoundary from "./components/DevErrorBoundary";
 
-if (typeof window !== "undefined") {
+if (import.meta.env.DEV && typeof window !== "undefined") {
   window.addEventListener("error", (e) => {
-    console.error("Global error:", e.error || e.message);
+    console.error("Global error:", (e as ErrorEvent).error || (e as ErrorEvent).message);
   });
   window.addEventListener("unhandledrejection", (e) => {
     console.error("Unhandled promise rejection:", (e as PromiseRejectionEvent).reason);
