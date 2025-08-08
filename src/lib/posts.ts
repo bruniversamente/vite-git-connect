@@ -1,9 +1,8 @@
 // src/lib/posts.ts
-import { fetchJSON, imageURL } from "./strapi";
+import { fetchJSON } from "./strapi";
 import type { Post } from "../types/content";
 
-type StrapiList<T> = { data: { id: number; attributes: any }[] };
-type StrapiSingle<T> = { data: { id: number; attributes: any } | null };
+type StrapiList<T> = { data: any[] };
 
 function mapPost(a: any): Post {
   const attrs = a?.attributes ?? a;
@@ -18,21 +17,17 @@ function mapPost(a: any): Post {
 }
 
 export async function getAllPosts(): Promise<Post[]> {
-  const json = await fetchJSON<StrapiList<Post>>("/posts", {
+  const json = await fetchJSON<StrapiList<Post>>("posts", {
     query: { sort: "postDate:desc", populate: "cover" },
   });
-  return (json.data ?? []).map((item) => mapPost(item));
+  return (json.data ?? []).map(mapPost);
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const json = await fetchJSON<StrapiList<Post>>("/posts", {
-    query: { filters: `slug:$eq:${slug}`, populate: "cover" },
+export async function getPostBySlug(slug?: string): Promise<Post | null> {
+  if (!slug) return null;
+  const json = await fetchJSON<StrapiList<Post>>("posts", {
+    query: { "filters[slug][$eq]": slug, populate: "cover" },
   });
   const first = json.data?.[0];
   return first ? mapPost(first) : null;
-}
-
-export function coverUrl(post?: Post) {
-  const u = post?.cover?.data?.attributes?.url;
-  return imageURL(u ?? undefined);
 }
