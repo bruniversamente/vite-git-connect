@@ -1,30 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import tailwindcss from "@tailwindcss/postcss";
 
-export default defineConfig(async ({ mode }) => {
-  const { componentTagger } = await import("lovable-tagger");
-  return {
-    server: {
-      host: "::",
-      port: 8080,
+
+export default defineConfig({
+  server: {
+    host: "::",
+    port: 8080,
+  },
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
-    plugins: [
-      react(),
-      mode === "development" && componentTagger(),
-    ].filter(Boolean),
-    css: {
-      postcss: {
-        plugins: [
-          tailwindcss,
-        ],
-      },
-    },
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
-      },
-    },
-  };
+  },
 });
