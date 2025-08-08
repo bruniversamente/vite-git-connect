@@ -13,6 +13,13 @@ export default defineConfig(async ({ mode }) => {
       react(),
       mode === "development" && componentTagger(),
     ].filter(Boolean),
+    css: {
+      postcss: {
+        plugins: {
+          '@tailwindcss/postcss': {},
+        },
+      },
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
