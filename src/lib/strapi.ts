@@ -23,12 +23,32 @@ export async function fetchJSON<T = any>(path: string, options: FetchOptions = {
   const { query, headers, ...rest } = options;
   const url = buildApiURL(path, query);
 
-  const finalHeaders: HeadersInit = {
+  const baseHeaders: Record<string, string> = {
     "Content-Type": "application/json",
-    ...(headers || {}),
+  };
+
+  // Normalize RequestInit.headers (HeadersInit) to a plain object
+  const normalizedHeaders: Record<string, string> = (() => {
+    if (!headers) return {};
+    if (headers instanceof Headers) {
+      const obj: Record<string, string> = {};
+      headers.forEach((v, k) => {
+        obj[k] = v;
+      });
+      return obj;
+    }
+    if (Array.isArray(headers)) {
+      return Object.fromEntries(headers as [string, string][]);
+    }
+    return headers as Record<string, string>;
+  })();
+
+  const finalHeaders: Record<string, string> = {
+    ...baseHeaders,
+    ...normalizedHeaders,
   };
   if (ENV.STRAPI_TOKEN) {
-    finalHeaders["Authorization"] = `Bearer ${ENV.STRAPI_TOKEN}`;
+    finalHeaders.Authorization = `Bearer ${ENV.STRAPI_TOKEN}`;
   }
 
   const res = await fetch(url, { headers: finalHeaders, ...rest });
