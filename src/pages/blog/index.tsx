@@ -11,6 +11,9 @@ export default function BlogIndex() {
     setLoading(true);
     getAllPosts()
       .then((data) => setPosts(data))
+      .catch((err) => {
+        console.error("Erro ao carregar posts:", err);
+      })
       .finally(() => setLoading(false));
   }, []);
 

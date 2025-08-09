@@ -51,6 +51,7 @@ export async function fetchJSON<T = any>(path: string, options: FetchOptions = {
     finalHeaders.Authorization = `Bearer ${ENV.STRAPI_TOKEN}`;
   }
 
+  console.log("Strapi fetch:", url);
   const res = await fetch(url, { headers: finalHeaders, ...rest });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
