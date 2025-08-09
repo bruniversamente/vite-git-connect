@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllPosts, coverUrl } from "../../lib/posts";
+import { getAllPosts } from "../../lib/posts"; // removido coverUrl
 import type { Post } from "../../types/content";
 
 export default function BlogIndex() {
