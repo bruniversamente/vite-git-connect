@@ -25,7 +25,7 @@ export default function Page() {
   return (
     <Section className="pt-10">
       <Helmet>
-        <title>Cadastro OPEA — Etapa {step}/4 | smartOPEA</title>
+        <title>{`Cadastro OPEA — Etapa ${step}/4 | smartOPEA`}</title>
         <meta name="description" content={`Formulário de cadastro OPEA etapa ${step} de 4`} />
         <link rel="canonical" href={`https://smartopea.com/painel/formulario?etapa=${step}`} />
       </Helmet>
