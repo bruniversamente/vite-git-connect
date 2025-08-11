@@ -39,8 +39,8 @@ export default function Painel() {
       className="space-y-8"
     >
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Acesso rápido</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-2xl font-semibold text-foreground">Acesso rápido</h1>
+        <p className="text-muted-foreground mt-1">
           Escolha uma opção para continuar:
         </p>
       </div>
@@ -52,13 +52,13 @@ export default function Painel() {
             onClick={() => navigate(item.href)}
             whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.2 }}
-            className="cursor-pointer bg-gradient-to-br from-white to-[#f0f4ff] rounded-2xl shadow-md hover:shadow-lg p-6 transition"
+            className="cursor-pointer bg-card border border-border rounded-2xl shadow-sm hover:shadow p-6 transition-shadow"
           >
             <div className="text-4xl mb-4">{item.icon}</div>
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-foreground">
               {item.label}
             </h2>
-            <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
           </motion.div>
         ))}
       </div>

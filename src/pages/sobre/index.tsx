@@ -1,23 +1,32 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { Container } from "../../components/layout/Containers";
+import SectionHeaderApple from "../../components/SectionHeaderApple";
+import CardApple from "../../components/CardApple";
+import AppleLink from "../../components/AppleLink";
 
 export default function Sobre() {
   return (
-    <section className="max-w-5xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-semibold mb-4">Sobre a smartOPEA</h1>
-      <p className="text-gray-700 mb-6">Plataforma para simplificar aprovações aeronáuticas (OPEA) com experiência digital de ponta.</p>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        <Link to="/sobre/adoniran" className="block p-4 border rounded hover:bg-gray-50">
-          <h3 className="font-medium">Adoniran</h3>
-          <p className="text-sm text-gray-600">Especialista em AGA e processos OPEA.</p>
-        </Link>
-        <Link to="/sobre/adachi" className="block p-4 border rounded hover:bg-gray-50">
-          <h3 className="font-medium">Adachi</h3>
-          <p className="text-sm text-gray-600">Engenharia e inovação.</p>
-        </Link>
-      </div>
+    <section className="py-12">
+      <Container>
+        <SectionHeaderApple
+          as="h1"
+          title="Sobre a smartOPEA"
+          subtitle="Plataforma para simplificar aprovações aeronáuticas (OPEA) com experiência digital de ponta."
+        />
+        <div className="grid md:grid-cols-2 gap-4 mt-8">
+          <Link to="/sobre/adoniran" className="block">
+            <CardApple title="Adoniran" description="Especialista em AGA e processos OPEA.">
+              <AppleLink to="/sobre/adoniran">Conhecer perfil</AppleLink>
+            </CardApple>
+          </Link>
+          <Link to="/sobre/adachi" className="block">
+            <CardApple title="Adachi" description="Engenharia e inovação.">
+              <AppleLink to="/sobre/adachi">Conhecer perfil</AppleLink>
+            </CardApple>
+          </Link>
+        </div>
+      </Container>
     </section>
   );
 }
-
-// Estas páginas são independentes. Importe no seu roteador principal (main.tsx).
