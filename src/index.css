@@ -2,5 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 7%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 7%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 240 3.8% 46.1%;
+
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 217.2 91.2% 59.8%;
+
+  /* Azul da marca (estilo Apple, mantendo brand) */
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+}
+
 html, body, #root { height: 100%; }
-body { @apply antialiased bg-white text-neutral-900; }
+body { @apply antialiased bg-background text-foreground; }
+
+a { @apply transition-colors; }

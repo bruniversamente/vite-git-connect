@@ -4,7 +4,7 @@ export default function ButtonApple1({ className = "", ...props }: ButtonHTMLAtt
   return (
     <button
       {...props}
-      className={`inline-flex items-center gap-2 rounded-full bg-[#1d1d1f] text-white px-5 py-2 text-sm hover:bg-black transition-colors ${className}`}
+      className={`inline-flex items-center gap-2 rounded-full bg-foreground text-background px-5 py-2 text-sm hover:bg-foreground/90 transition-colors ${className}`}
     >
       {props.children}
       <svg aria-hidden className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
