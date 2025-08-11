@@ -8,7 +8,15 @@ export default function ClientesParceiros(){
       <Container className="py-16">
         <div className="text-center text-2xl font-semibold text-foreground mb-8">Confiado por equipes líderes no Brasil</div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center">
-          {logos.map((src,i)=>(<img key={i} src={src} alt="Logo de empresa parceira smartOPEA" className="h-8 object-contain mx-auto" loading="lazy" />))}
+          {logos.map((src,i)=>(
+            <img
+              key={i}
+              src={src}
+              alt="Logo de empresa parceira smartOPEA"
+              className="h-8 object-contain mx-auto opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition"
+              loading="lazy"
+            />
+          ))}
         </div>
       </Container>
     </div>
