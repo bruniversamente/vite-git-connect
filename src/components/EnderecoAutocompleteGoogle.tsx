@@ -28,7 +28,7 @@ export default function EnderecoAutocompleteGoogle({ label, placeholder = "Digit
     <label htmlFor={id} className="grid gap-1">
       <span className="text-sm text-neutral-700">{label}</span>
       <Autocomplete onLoad={handleLoad} onPlaceChanged={handlePlaceChanged}>
-        <input id={id} placeholder={placeholder} className="rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id={id} placeholder={placeholder} className="w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500" />
       </Autocomplete>
     </label>
   );
