@@ -29,7 +29,7 @@ export default function Page() {
   );
 
   return (
-    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY"} libraries={["places"]} onError={() => setGmapsError(true)} onLoad={() => setGmapsError(false)}>
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={["places"]} onError={() => setGmapsError(true)} onLoad={() => setGmapsError(false)}>
       <Section className="pt-10">
       <Helmet>
         <title>{`Cadastro OPEA — Etapa ${step}/4 | smartOPEA`}</title>
