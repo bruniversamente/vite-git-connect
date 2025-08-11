@@ -7,9 +7,14 @@ import CampoTexto from "../../../components/CampoTexto";
 import CampoSelect from "../../../components/CampoSelect";
 import CampoTextarea from "../../../components/CampoTextarea";
 import CampoFile from "../../../components/CampoFile";
+import EnderecoAutocompleteGoogle from "../../../components/EnderecoAutocompleteGoogle";
+import { LoadScript } from "@react-google-maps/api";
 
 export default function Page() {
   const [step, setStep] = useState(1);
+  const [endereco, setEndereco] = useState<string>("");
+  const [lat, setLat] = useState<string>("");
+  const [lng, setLng] = useState<string>("");
 
   const next = () => setStep((s) => Math.min(4, s + 1));
   const prev = () => setStep((s) => Math.max(1, s - 1));
@@ -23,7 +28,8 @@ export default function Page() {
   );
 
   return (
-    <Section className="pt-10">
+    <LoadScript googleMapsApiKey="AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY" libraries={["places"]}>
+      <Section className="pt-10">
       <Helmet>
         <title>{`Cadastro OPEA — Etapa ${step}/4 | smartOPEA`}</title>
         <meta name="description" content={`Formulário de cadastro OPEA etapa ${step} de 4`} />
@@ -38,13 +44,21 @@ export default function Page() {
               <section className="grid gap-3">
                 <h2 className="text-lg font-semibold flex items-center gap-2">📑 Dados do Objeto</h2>
                 <CampoTexto label="Nome do Empreendimento" placeholder="Ex: Residencial Aurora" />
-                <CampoTexto label="Endereço completo da obra" placeholder="Ex: Rua Itupava, 1411, Curitiba" />
+                <EnderecoAutocompleteGoogle
+                  label="Endereço completo da obra"
+                  placeholder="Ex: Rua Itupava, 1411, Curitiba"
+                  onSelecionado={({ lat: la, lng: ln, endereco: end }) => {
+                    setEndereco(end);
+                    setLat(String(la));
+                    setLng(String(ln));
+                  }}
+                />
                 <CampoTexto label="Telefone" placeholder="(41) 99999-0000" />
                 <CampoTexto label="Tipologia" placeholder="Ex: Edifício Comercial" />
                 <CampoTexto label="Material" placeholder="Ex: Concreto Armado" />
                 <div className="grid md:grid-cols-2 gap-4">
-                  <CampoTexto label="Latitude (opcional)" placeholder="-25.4284" />
-                  <CampoTexto label="Longitude (opcional)" placeholder="-49.2733" />
+                  <CampoTexto label="Latitude (opcional)" placeholder="-25.4284" value={lat} onChange={(e) => setLat(e.target.value)} />
+                  <CampoTexto label="Longitude (opcional)" placeholder="-49.2733" value={lng} onChange={(e) => setLng(e.target.value)} />
                 </div>
               </section>
 
@@ -145,6 +159,7 @@ export default function Page() {
           )}
         </div>
       </Container>
-    </Section>
+      </Section>
+    </LoadScript>
   );
 }
