@@ -15,6 +15,7 @@ export default function Page() {
   const [endereco, setEndereco] = useState<string>("");
   const [lat, setLat] = useState<string>("");
   const [lng, setLng] = useState<string>("");
+  const [gmapsError, setGmapsError] = useState(false);
 
   const next = () => setStep((s) => Math.min(4, s + 1));
   const prev = () => setStep((s) => Math.max(1, s - 1));
@@ -28,7 +29,7 @@ export default function Page() {
   );
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY" libraries={["places"]}>
+    <LoadScript googleMapsApiKey="AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY" libraries={["places"]} onError={() => setGmapsError(true)} onLoad={() => setGmapsError(false)}>
       <Section className="pt-10">
       <Helmet>
         <title>{`Cadastro OPEA — Etapa ${step}/4 | smartOPEA`}</title>
@@ -53,6 +54,11 @@ export default function Page() {
                     setLng(String(ln));
                   }}
                 />
+                {gmapsError && (
+                  <p className="text-sm text-muted-foreground">
+                    Autocomplete do Google indisponível. Autorize este domínio na sua chave (restrições de HTTP referrer).
+                  </p>
+                )}
                 <CampoTexto label="Telefone" placeholder="(41) 99999-0000" />
                 <CampoTexto label="Tipologia" placeholder="Ex: Edifício Comercial" />
                 <CampoTexto label="Material" placeholder="Ex: Concreto Armado" />
