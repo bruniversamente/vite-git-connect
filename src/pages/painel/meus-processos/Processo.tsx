@@ -7,7 +7,7 @@ export default function ProcessoDetalhe(){
     <Section className="pt-20">
       <Container>
         <h1 className="text-3xl font-semibold mb-4">Processo {documentId}</h1>
-        <p className="text-neutral-600">Detalhes do processo em breve.</p>
+        <p className="text-muted-foreground">Detalhes do processo em breve.</p>
       </Container>
     </Section>
   );

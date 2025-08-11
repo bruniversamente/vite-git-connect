@@ -32,9 +32,9 @@ export default function ProcessoDetalhe() {
       </Helmet>
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">
-          Processo <span className="text-gray-500 text-base">({processo.protocolo || `#${processo.id}`})</span>
+          Processo <span className="text-muted-foreground text-base">({processo.protocolo || `#${processo.id}`})</span>
         </h1>
-        <span className="px-3 py-1 rounded-full bg-emerald-600 text-white text-sm">
+        <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-sm">
           {processo.status || "—"}
         </span>
       </header>
@@ -42,14 +42,14 @@ export default function ProcessoDetalhe() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">
           <h2 className="text-lg font-medium">Resumo</h2>
-          <p className="text-gray-700 whitespace-pre-wrap">{processo.resumo || "Sem resumo."}</p>
+          <p className="text-foreground/80 whitespace-pre-wrap">{processo.resumo || "Sem resumo."}</p>
         </div>
 
         <div className="space-y-3">
           <h2 className="text-lg font-medium">Metadados</h2>
           {processo.createdAt && (
             <div>
-              <span className="text-gray-600">Criado em:</span> {new Date(processo.createdAt).toLocaleString("pt-BR")}
+              <span className="text-muted-foreground">Criado em:</span> {new Date(processo.createdAt).toLocaleString("pt-BR")}
             </div>
           )}
         </div>
@@ -60,7 +60,7 @@ export default function ProcessoDetalhe() {
         {Array.isArray(processo.notificacoes) && processo.notificacoes.length > 0 ? (
           <ul className="space-y-2">
             {processo.notificacoes.map((n: any, i: number) => (
-              <li key={i} className="rounded-lg border bg-white p-3">
+              <li key={i} className="rounded-lg border border-border bg-card p-3">
                 <div className="text-sm text-muted-foreground">{n?.tipo || "Notificação"}</div>
                 <div className="font-medium">{n?.mensagem || JSON.stringify(n)}</div>
               </li>

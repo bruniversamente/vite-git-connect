@@ -35,10 +35,10 @@ export default function Page() {
               <div className="col-span-full text-muted-foreground">Nenhum processo encontrado.</div>
             )}
             {itens.map((p) => (
-              <a key={p.id} href={`/painel/meus-processos/${p.id}`} className="block rounded-xl border bg-white p-4 hover:shadow transition">
+              <a key={p.id} href={`/painel/meus-processos/${p.id}`} className="block rounded-2xl border border-border bg-card p-4 hover:shadow transition-shadow">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-muted-foreground">Protocolo</span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs">{p.status || "—"}</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs">{p.status || "—"}</span>
                 </div>
                 <div className="text-lg font-medium">{p.protocolo || `#${p.id}`}</div>
                 {p.resumo && <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{p.resumo}</p>}

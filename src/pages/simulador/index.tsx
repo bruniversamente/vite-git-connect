@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import EnderecoAutocompleteGoogle from "../../components/EnderecoAutocompleteGoogle";
 import { LoadScript } from "@react-google-maps/api";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "emailjs-com";
+import { Helmet } from "react-helmet-async";
+import { Container } from "../../components/layout/Containers";
 
 export default function Simulador() {
   const [alturaProjeto, setAlturaProjeto] = useState<number | null>(null);
@@ -26,14 +26,7 @@ export default function Simulador() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        data: {
-          nome,
-          email,
-          endereco,
-          latitude: coordenadas.lat,
-          longitude: coordenadas.lng,
-          altura: alturaProjeto,
-        },
+        data: { nome, email, endereco, latitude: coordenadas.lat, longitude: coordenadas.lng, altura: alturaProjeto },
       }),
     });
 
@@ -57,27 +50,29 @@ export default function Simulador() {
 
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={["places"]}>
-      <Header />
-      <main className="max-w-[1280px] mx-auto px-6 pt-32 pb-20">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">Descubra se seu projeto precisa de aprovação</h1>
-        <p className="text-lg text-gray-700 mb-8 max-w-2xl">
-          Faça uma simulação gratuita e receba um parecer técnico por e-mail.
-        </p>
+      <Helmet>
+        <title>Simulador de Viabilidade Aeronáutica | smartOPEA</title>
+        <meta name="description" content="Descubra se seu projeto precisa de aprovação OPEA e receba um parecer por e-mail." />
+        <link rel="canonical" href={`${window.location.origin}/simulador`} />
+      </Helmet>
+      <main className="max-w-[1280px] mx-auto px-6 pt-24 pb-16">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-foreground">Descubra se seu projeto precisa de aprovação</h1>
+        <p className="text-lg text-foreground/80 mt-3 max-w-2xl">Faça uma simulação gratuita e receba um parecer técnico por e-mail.</p>
 
-        <div className="bg-gradient-to-br from-[#f1f5f9] to-[#e0f2fe] p-10 rounded-2xl shadow-xl space-y-6">
+        <div className="mt-8 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
           <div>
-            <label className="block mb-2 font-medium text-gray-800">Seu nome</label>
+            <label className="block mb-2 font-medium text-foreground">Seu nome</label>
             <input
               type="text"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
+              className="w-full px-4 py-2 border border-border bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/40"
               placeholder="Digite seu nome"
             />
           </div>
 
-          <div>
-            <span className="block mb-2 font-medium text-gray-800">Endereço completo da área do projeto</span>
+          <div className="mt-4">
+            <span className="block mb-2 font-medium text-foreground">Endereço completo da área do projeto</span>
             <EnderecoAutocompleteGoogle
               label="Endereço completo da área do projeto"
               onSelecionado={(info: any) => {
@@ -87,8 +82,8 @@ export default function Simulador() {
             />
           </div>
 
-          <div>
-            <label className="block mb-2 font-medium text-gray-800">Altura da estrutura (em metros)</label>
+          <div className="mt-4">
+            <label className="block mb-2 font-medium text-foreground">Altura da estrutura (em metros)</label>
             <input
               type="number"
               value={alturaProjeto !== null ? String(alturaProjeto) : ""}
@@ -96,18 +91,18 @@ export default function Simulador() {
                 const valor = e.target.value;
                 setAlturaProjeto(valor === "" ? null : parseFloat(valor));
               }}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
+              className="w-full px-4 py-2 border border-border bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/40"
               placeholder="Ex: 38"
             />
           </div>
 
-          <div>
-            <label className="block mb-2 font-medium text-gray-800">Seu e-mail</label>
+          <div className="mt-4">
+            <label className="block mb-2 font-medium text-foreground">Seu e-mail</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
+              className="w-full px-4 py-2 border border-border bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/40"
               placeholder="nome@exemplo.com"
               required
             />
@@ -115,7 +110,7 @@ export default function Simulador() {
 
           <button
             onClick={handleSimular}
-            className="bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition w-full sm:w-max"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-foreground text-background px-6 py-3 hover:bg-foreground/90 transition-colors"
           >
             Receba uma avaliação
           </button>
@@ -127,7 +122,7 @@ export default function Simulador() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.4 }}
-                className="mt-6 p-4 bg-white border border-gray-200 rounded-lg text-sm whitespace-pre-line text-gray-800 shadow"
+                className="mt-6 p-4 border border-border bg-card rounded-xl text-sm whitespace-pre-line text-foreground"
               >
                 {resultado}
               </motion.div>
@@ -135,7 +130,6 @@ export default function Simulador() {
           </AnimatePresence>
         </div>
       </main>
-      <Footer />
     </LoadScript>
   );
 }
