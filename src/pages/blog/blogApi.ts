@@ -1,4 +1,4 @@
-const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL = (import.meta.env.VITE_STRAPI_URL || "http://localhost:1337").replace(/\/+$/, "");
 
 export interface PostItem {
   id: number;
@@ -38,7 +38,7 @@ function getImageUrl(item?: any): string | null {
 }
 
 export async function fetchPosts(page = 1, pageSize = 10): Promise<PostNormalized[]> {
-  const url = `${STRAPI_URL}/posts?sort=postDate:desc&populate=cover&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+  const url = `${STRAPI_URL}/api/posts?sort=postDate:desc&populate=cover&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json();
   const list: PostItem[] = json?.data || [];
@@ -55,7 +55,7 @@ export async function fetchPosts(page = 1, pageSize = 10): Promise<PostNormalize
 }
 
 export async function fetchPostBySlug(slug: string): Promise<PostNormalized | null> {
-  const url = `${STRAPI_URL}/posts?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=cover`;
+  const url = `${STRAPI_URL}/api/posts?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=cover`;
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json();
   const item: PostItem | undefined = (json?.data || [])[0];

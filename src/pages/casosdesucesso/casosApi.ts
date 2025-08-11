@@ -1,4 +1,4 @@
-const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL = (import.meta.env.VITE_STRAPI_URL || "http://localhost:1337").replace(/\/+$/, "");
 
 export interface CasoItem {
   id: number;
@@ -47,7 +47,7 @@ function getImageUrl(item?: any): string | null {
 }
 
 export async function fetchCasos(page = 1, pageSize = 12): Promise<CasoNormalized[]> {
-  const url = `${STRAPI_URL}/portfolios?sort=title:asc&populate=cover`;
+  const url = `${STRAPI_URL}/api/portfolios?sort=title:asc&populate=cover`;
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json();
   const list: CasoItem[] = json?.data || [];
@@ -65,7 +65,7 @@ export async function fetchCasos(page = 1, pageSize = 12): Promise<CasoNormalize
 }
 
 export async function fetchCasoBySlug(slug: string): Promise<CasoNormalized | null> {
-  const url = `${STRAPI_URL}/portfolios?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=cover,gallery`;
+  const url = `${STRAPI_URL}/api/portfolios?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=cover,gallery`;
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json();
   const item: CasoItem | undefined = (json?.data || [])[0];
