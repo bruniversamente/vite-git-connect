@@ -56,7 +56,7 @@ export default function Simulador() {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY" libraries={["places"]}>
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyDxvOo0hijPKnpYjabrIzxgdZ21w0kZjBY"} libraries={["places"]}>
       <Header />
       <main className="max-w-[1280px] mx-auto px-6 pt-32 pb-20">
         <h1 className="text-4xl font-bold mb-4 text-gray-900">Descubra se seu projeto precisa de aprovação</h1>
